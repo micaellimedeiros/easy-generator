@@ -1,56 +1,66 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { useForm, SubmitHandler } from "react-hook-form";
+
 import api from "../services/api";
+
+type FormData = {
+  email: string;
+  name: string;
+  password: string;
+};
 
 const LoginForm = () => {
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleLogin = async () => {
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
-      const response = await api.post("auth/login", formData);
-      console.log(response);
+      await api.post("auth/login", data);
 
       navigate("/");
     } catch (error: any) {
-      console.log(error);
-
-      // Add toast
+      console.error(error.response.data);
     }
   };
 
   return (
     <div>
-      <h2>Login</h2>
-      <form>
+      <h2>Sign Up</h2>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <label>Email:</label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleInputChange}
-        />
+        <input {...register("email", { required: "Email is required" })} />
+        {errors.email && <p>{errors.email.message}</p>}
+
+        <label>Name:</label>
+        <input {...register("name", { required: "Name is required" })} />
+        {errors.name && <p>{errors.name.message}</p>}
 
         <label>Password:</label>
         <input
           type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleInputChange}
+          {...register("password", {
+            required: "Password is required",
+            minLength: {
+              value: 8,
+              message: "Password must be at least 8 characters long",
+            },
+            pattern: {
+              value:
+                /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+              message: "Password must meet the requirements",
+            },
+          })}
         />
 
-        <button type="button" onClick={handleLogin}>
-          Login
-        </button>
+        {errors.password && <p>{errors.password.message}</p>}
+
+        <button type="submit">Login</button>
       </form>
     </div>
   );

@@ -1,65 +1,53 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { useForm, SubmitHandler } from "react-hook-form";
+
 import api from "../services/api";
+
+type FormData = {
+  email: string;
+  name: string;
+  password: string;
+};
 
 const RegisterForm = () => {
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
-    email: "",
-    name: "",
-    password: "",
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>();
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleRegister = async () => {
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
-      const response = await api.post("auth/register", formData);
-      console.log(response.data);
+      await api.post("auth/register", data);
 
       navigate("/");
     } catch (error: any) {
-      console.log(error);
-
-      // Add toast
+      console.error(error.response.data);
     }
   };
 
   return (
     <div>
-      <h2>Sign Up</h2>
-      <form>
-        <label>Email:</label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleInputChange}
-        />
+      <h2>Register</h2>
 
-        <label>Name:</label>
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleInputChange}
-        />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <label>Email:</label>
+        <input {...register("email", { required: "Email is required" })} />
+
+        {errors.email && <p>{errors.email.message}</p>}
 
         <label>Password:</label>
         <input
           type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleInputChange}
+          {...register("password", { required: "Password is required" })}
         />
 
-        <button type="button" onClick={handleRegister}>
-          Sign Up
-        </button>
+        {errors.password && <p>{errors.password.message}</p>}
+
+        <button type="submit">Login</button>
       </form>
     </div>
   );
