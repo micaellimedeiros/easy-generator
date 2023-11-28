@@ -17,8 +17,8 @@ const LoginForm = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await api.post("/login", formData);
-      console.log(response.data);
+      const response = await api.post("auth/login", formData);
+      console.log(response);
 
       navigate("/");
     } catch (error: any) {
