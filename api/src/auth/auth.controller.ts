@@ -26,7 +26,7 @@ export class AuthController {
 
       response.cookie('jwt', jwt, { httpOnly: true });
 
-      return { message: 'Registration successful.' };
+      return { message: 'Registration successful.', HttpStatus: 200 };
     } catch (error) {
       throw new HttpException(
         error.message || 'Registration failed.',
@@ -42,7 +42,7 @@ export class AuthController {
 
       response.cookie('jwt', jwt, { httpOnly: true });
 
-      return { message: 'Authentication successful.' };
+      return { message: 'Authentication successful.', HttpStatus: 200 };
     } catch (error) {
       throw new HttpException(
         error.message || 'Authentication failed.',
@@ -58,7 +58,7 @@ export class AuthController {
 
       if (!cookie) {
         throw new HttpException(
-          'You are not logged in!',
+          'Authentication failed.',
           HttpStatus.UNAUTHORIZED,
         );
       }
@@ -71,7 +71,7 @@ export class AuthController {
 
       response.clearCookie('jwt');
 
-      return { message: 'Logout successful.' };
+      return { message: 'Logout successful.', HttpStatus: 200 };
     } catch (error) {
       throw new HttpException(
         error.message || 'Logout failed.',
