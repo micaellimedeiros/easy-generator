@@ -10,7 +10,7 @@ import * as bcrypt from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { LoginDto } from './dto/login.dto';
 import { RegisterDto } from './dto/register.dto';
-import { User } from 'src/users/schemas/user.schema';
+import { User } from '../users/schemas/user.schema';
 
 interface JwtPayload {
   id: string;
