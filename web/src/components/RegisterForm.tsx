@@ -21,7 +21,7 @@ const RegisterForm = () => {
       const response = await api.post("register", formData);
       console.log(response.data);
 
-      navigate("/application");
+      navigate("/");
     } catch (error: any) {
       console.log(error);
 

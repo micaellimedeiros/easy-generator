@@ -20,7 +20,7 @@ const LoginForm = () => {
       const response = await api.post("/login", formData);
       console.log(response.data);
 
-      navigate("/application");
+      navigate("/");
     } catch (error: any) {
       console.log(error);
 
