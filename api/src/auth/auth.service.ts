@@ -23,8 +23,8 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async register(registerDto: RegisterDto): Promise<{ token: string }> {
-    const { name, email, password } = registerDto;
+  async register(body: RegisterDto): Promise<{ token: string }> {
+    const { name, email, password } = body;
 
     if (await this.emailExists(email)) {
       throw new ConflictException('User with this email already exists.');
@@ -45,8 +45,8 @@ export class AuthService {
     return { token };
   }
 
-  async login(loginDto: LoginDto): Promise<{ token: string }> {
-    const { email, password } = loginDto;
+  async login(body: LoginDto): Promise<{ token: string }> {
+    const { email, password } = body;
 
     const user = await this.userModel.findOne({ email });
 

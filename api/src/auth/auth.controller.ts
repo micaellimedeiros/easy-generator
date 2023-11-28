@@ -1,6 +1,8 @@
 import {
   Body,
   Controller,
+  HttpException,
+  HttpStatus,
   Post,
   Req,
   Res,
@@ -18,48 +20,47 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('/register')
-  async register(
-    @Body() registerDto: RegisterDto,
-    @Res({ passthrough: true }) response: Response,
-  ) {
+  async register(@Body() body: RegisterDto, @Res() response: Response) {
     try {
-      const jwt = await this.authService.register(registerDto);
+      const jwt = await this.authService.register(body);
 
       response.cookie('jwt', jwt, { httpOnly: true });
 
       return { message: 'Registration successful.' };
     } catch (error) {
-      throw new UnauthorizedException(error.message || 'Registration failed.');
+      throw new HttpException(
+        error.message || 'Registration failed.',
+        HttpStatus.METHOD_NOT_ALLOWED,
+      );
     }
   }
 
   @Post('/login')
-  async login(
-    @Body() loginDto: LoginDto,
-    @Res({ passthrough: true }) response: Response,
-  ) {
+  async login(@Body() body: LoginDto, @Res() response: Response) {
     try {
-      const jwt = await this.authService.login(loginDto);
+      const jwt = await this.authService.login(body);
+
       response.cookie('jwt', jwt, { httpOnly: true });
 
       return { message: 'Authentication successful.' };
     } catch (error) {
-      throw new UnauthorizedException(
+      throw new HttpException(
         error.message || 'Authentication failed.',
+        HttpStatus.METHOD_NOT_ALLOWED,
       );
     }
   }
 
   @Post('/logout')
-  async logout(
-    @Res({ passthrough: true }) response: Response,
-    @Req() request: Request,
-  ) {
+  async logout(@Res() response: Response, @Req() request: Request) {
     try {
       const cookie = request.cookies['jwt'];
 
       if (!cookie) {
-        throw new UnauthorizedException('You are not logged in!');
+        throw new HttpException(
+          'You are not logged in!',
+          HttpStatus.UNAUTHORIZED,
+        );
       }
 
       const data = await this.authService.verifyJwtToken(cookie.token);
@@ -72,7 +73,10 @@ export class AuthController {
 
       return { message: 'Logout successful.' };
     } catch (error) {
-      throw new UnauthorizedException(error.message || 'Logout failed.');
+      throw new HttpException(
+        error.message || 'Logout failed.',
+        HttpStatus.METHOD_NOT_ALLOWED,
+      );
     }
   }
 }
