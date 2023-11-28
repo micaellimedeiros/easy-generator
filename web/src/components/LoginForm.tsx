@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -13,6 +14,8 @@ type FormData = {
 const LoginForm = () => {
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -21,6 +24,8 @@ const LoginForm = () => {
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
+      setLoading(true);
+
       await api.post("auth/login", data);
 
       toast.success(`User logged in successfully`);
@@ -28,6 +33,8 @@ const LoginForm = () => {
       navigate("/");
     } catch (error: any) {
       toast.error(`Error: ${error.response.data.message}`);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -49,7 +56,9 @@ const LoginForm = () => {
 
         {errors.password && <p>{errors.password.message}</p>}
 
-        <button type="submit">Login</button>
+        <button type="submit" disabled={loading}>
+          Login
+        </button>
       </form>
     </div>
   );

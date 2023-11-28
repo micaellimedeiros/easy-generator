@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -14,6 +15,8 @@ type FormData = {
 const RegisterForm = () => {
   const navigate = useNavigate();
 
+  const [loading, setLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -22,6 +25,8 @@ const RegisterForm = () => {
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
+      setLoading(true);
+
       await api.post("auth/register", data);
 
       toast.success(`User registered successfully`);
@@ -29,6 +34,8 @@ const RegisterForm = () => {
       navigate("/");
     } catch (error: any) {
       toast.error(`Error: ${error.response.data.message}`);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -64,7 +71,9 @@ const RegisterForm = () => {
 
         {errors.password && <p>{errors.password.message}</p>}
 
-        <button type="submit">Register</button>
+        <button type="submit" disabled={loading}>
+          Register
+        </button>
       </form>
     </div>
   );
