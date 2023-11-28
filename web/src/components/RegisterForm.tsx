@@ -22,8 +22,10 @@ const RegisterForm = () => {
       console.log(response.data);
 
       navigate("/application");
-    } catch (error) {
-      console.error(error.response.data);
+    } catch (error: any) {
+      console.log(error);
+
+      // Add toast
     }
   };
 
