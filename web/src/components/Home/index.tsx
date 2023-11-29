@@ -1,30 +1,29 @@
 import { Link } from "react-router-dom";
 
-import { Container, Content, AnimationContainer, Background } from "./styles";
+import { Container, AnimationContainer } from "./styles";
 
 import Button from "../Button";
+
+import logo from "../../assets/logo.svg";
 
 const Home = () => {
   return (
     <Container>
-      <Content>
-        <AnimationContainer>
-          <h2>Welcome to the Application</h2>
-          <p>Choose an option:</p>
+      <AnimationContainer>
+        <img src={logo} alt="EasyGenerator Logo" />
 
-          <div>
-            <Link to="/login">
-              <Button>Login</Button>
-            </Link>
+        <h2>Welcome to the Application! 👋</h2>
 
-            <Link to="/register">
-              <Button>Register</Button>
-            </Link>
-          </div>
-        </AnimationContainer>
-      </Content>
+        <div>
+          <Link to="/login">
+            <Button>Login</Button>
+          </Link>
 
-      <Background />
+          <Link to="/register">
+            <Button>Register</Button>
+          </Link>
+        </div>
+      </AnimationContainer>
     </Container>
   );
 };

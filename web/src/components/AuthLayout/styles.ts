@@ -8,7 +8,7 @@ export const Container = styled.div`
   min-height: 100vh;
   background: #121214;
 
-  /* align-items: stretch; */
+  align-items: stretch;
 
   @media (max-width: 768px) {
     background-size: 2000px auto, 1000px auto;
@@ -27,14 +27,13 @@ export const LoginWrapper = styled.div`
 
 export const ChildrenWrapper = styled.div`
   flex: 1;
-  display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
   padding: 28px 0 50px;
 
   a {
-    color: #ff9000;
+    color: #ffa246;
     display: block;
     margin-top: 24px;
     text-decoration: none;
