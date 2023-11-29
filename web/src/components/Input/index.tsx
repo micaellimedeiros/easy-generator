@@ -20,9 +20,9 @@ const Input: React.FC<InputLabelProps> = ({
 
       <InputContainer>
         <input {...inputProps} {...register} />
-
-        {error && <p>{error}</p>}
       </InputContainer>
+
+      {error && <p>{error}</p>}
     </Container>
   );
 };

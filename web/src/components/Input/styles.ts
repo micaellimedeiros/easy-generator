@@ -5,6 +5,10 @@ export const Container = styled.div`
   flex-direction: column;
   width: 100%;
   margin-bottom: 1.25rem;
+
+  p {
+    margin-top: 0.5rem;
+  }
 `;
 
 export const InputContainer = styled.div`
