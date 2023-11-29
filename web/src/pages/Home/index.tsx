@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom";
 
-import { Container, AnimationContainer } from "./styles";
-
-import Button from "../Button";
+import { useAuth } from "../../context/auth";
 
 import logo from "../../assets/logo.svg";
-import { useAuth } from "../../context/auth";
+import Button from "../../components/Button";
+
+import { Container, AnimationContainer } from "./styles";
 
 const Home = () => {
   const { isLoggedIn, logout } = useAuth();

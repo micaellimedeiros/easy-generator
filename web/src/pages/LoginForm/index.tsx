@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { FiArrowLeft } from "react-icons/fi";
 
+import { FiArrowLeft } from "react-icons/fi";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "react-toastify";
 
@@ -10,21 +10,20 @@ import { useAuth } from "../../context/auth";
 import api from "../../services/api";
 import logo from "../../assets/logo.svg";
 
-import Input from "../Input";
-import Button from "../Button";
+import Button from "../../components/Button";
+import Input from "../../components/Input";
 
 import { Container, Content, AnimationContainer, Background } from "./styles";
 
 type FormData = {
   email: string;
-  name: string;
   password: string;
 };
 
-const RegisterForm = () => {
-  const { login } = useAuth();
-
+const LoginForm = () => {
   const [loading, setLoading] = useState(false);
+
+  const { login } = useAuth();
 
   const {
     register,
@@ -36,9 +35,9 @@ const RegisterForm = () => {
     try {
       setLoading(true);
 
-      const response = await api.post("auth/register", data);
+      const response = await api.post("auth/login", data);
 
-      toast.success(`User registered successfully`);
+      toast.success(`User logged in successfully`);
 
       login(response.data.token);
     } catch (error: any) {
@@ -50,27 +49,12 @@ const RegisterForm = () => {
 
   return (
     <Container>
-      <Background />
-
       <Content>
         <AnimationContainer>
           <img src={logo} alt="EasyGenerator Logo" />
 
           <form onSubmit={handleSubmit(onSubmit)}>
-            <h2>Register</h2>
-
-            <Input
-              id="name"
-              label="Name"
-              placeholder="John Doe"
-              required
-              register={{
-                ...register("name", {
-                  required: "Name is required",
-                }),
-              }}
-              error={errors.name?.message?.toString()}
-            />
+            <h2>Sign In</h2>
 
             <Input
               type="email"
@@ -102,8 +86,7 @@ const RegisterForm = () => {
                   pattern: {
                     value:
                       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-                    message:
-                      "Password must have at least one letter, one number and one special character",
+                    message: "Password must meet the requirements",
                   },
                 }),
               }}
@@ -111,7 +94,7 @@ const RegisterForm = () => {
             />
 
             <Button type="submit" disabled={loading} loading={loading}>
-              Register
+              Login
             </Button>
           </form>
 
@@ -121,8 +104,10 @@ const RegisterForm = () => {
           </Link>
         </AnimationContainer>
       </Content>
+
+      <Background />
     </Container>
   );
 };
 
-export default RegisterForm;
+export default LoginForm;

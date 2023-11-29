@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-
 import { FiArrowLeft } from "react-icons/fi";
+
 import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "react-toastify";
 
@@ -10,20 +10,21 @@ import { useAuth } from "../../context/auth";
 import api from "../../services/api";
 import logo from "../../assets/logo.svg";
 
-import Button from "../Button";
-import Input from "../Input";
+import Input from "../../components/Input";
+import Button from "../../components/Button";
 
 import { Container, Content, AnimationContainer, Background } from "./styles";
 
 type FormData = {
   email: string;
+  name: string;
   password: string;
 };
 
-const LoginForm = () => {
-  const [loading, setLoading] = useState(false);
-
+const RegisterForm = () => {
   const { login } = useAuth();
+
+  const [loading, setLoading] = useState(false);
 
   const {
     register,
@@ -35,9 +36,9 @@ const LoginForm = () => {
     try {
       setLoading(true);
 
-      const response = await api.post("auth/login", data);
+      const response = await api.post("auth/register", data);
 
-      toast.success(`User logged in successfully`);
+      toast.success(`User registered successfully`);
 
       login(response.data.token);
     } catch (error: any) {
@@ -49,12 +50,27 @@ const LoginForm = () => {
 
   return (
     <Container>
+      <Background />
+
       <Content>
         <AnimationContainer>
           <img src={logo} alt="EasyGenerator Logo" />
 
           <form onSubmit={handleSubmit(onSubmit)}>
-            <h2>Sign In</h2>
+            <h2>Register</h2>
+
+            <Input
+              id="name"
+              label="Name"
+              placeholder="John Doe"
+              required
+              register={{
+                ...register("name", {
+                  required: "Name is required",
+                }),
+              }}
+              error={errors.name?.message?.toString()}
+            />
 
             <Input
               type="email"
@@ -86,15 +102,16 @@ const LoginForm = () => {
                   pattern: {
                     value:
                       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-                    message: "Password must meet the requirements",
+                    message:
+                      "Password must have at least one letter, one number and one special character",
                   },
                 }),
               }}
               error={errors.password?.message?.toString()}
             />
 
-            <Button type="submit" disabled={loading}>
-              Login
+            <Button type="submit" disabled={loading} loading={loading}>
+              Register
             </Button>
           </form>
 
@@ -104,10 +121,8 @@ const LoginForm = () => {
           </Link>
         </AnimationContainer>
       </Content>
-
-      <Background />
     </Container>
   );
 };
 
-export default LoginForm;
+export default RegisterForm;
