@@ -8,10 +8,6 @@ export const Container = styled.div`
 `;
 
 export const InputContainer = styled.div`
-  /* display: flex;
-  justify-content: center;
-  position: relative; */
-
   background: #232129;
   border-radius: 10px;
   width: 100%;

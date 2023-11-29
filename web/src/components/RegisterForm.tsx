@@ -1,11 +1,14 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { FiArrowLeft } from "react-icons/fi";
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "react-toastify";
 
 import api from "../services/api";
+
 import Input from "./Input";
+import Button from "./Button";
 
 type FormData = {
   email: string;
@@ -96,9 +99,14 @@ const RegisterForm = () => {
           error={errors.password?.message?.toString()}
         />
 
-        <button type="submit" disabled={loading}>
+        <Button type="submit" disabled={loading}>
           Register
-        </button>
+        </Button>
+
+        <Link to="/">
+          <FiArrowLeft />
+          Back to home
+        </Link>
       </form>
     </div>
   );

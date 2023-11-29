@@ -2,17 +2,26 @@ import { createGlobalStyle } from "styled-components";
 
 export default createGlobalStyle`
   * {
-    box-sizing: border-box;
     margin: 0;
-    padding: 0;
+    padding:0;
+    outline: 0;
+    box-sizing: border-box;
   }
 
   body {
-    font-family: "Segoe UI", Arial, sans-serif;
+    background: #312E38;
+    color: #FFF;
+
+    -webkit-font-smoothing: antialiased;
   }
 
-  svg {
-    cursor: pointer;
+  body, input, button {
+    font-family: 'Roboto Slab', serif;
+    font-size: 16px;
+  }
+
+  h1, h2, h3 h4, h5, h6, strong {
+    font-weight: 500;
   }
 
   label {
@@ -20,5 +29,9 @@ export default createGlobalStyle`
     color: #A8A8B3;
 
     margin-bottom: 0.5rem;
+  }
+
+  button, svg {
+    cursor: pointer;
   }
 `;
