@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.button`
-  background: #ff9000;
+  background: #ffa246;
   height: 56px;
   border-radius: 10px;
   border: 0;
@@ -14,6 +14,6 @@ export const Container = styled.button`
   transition: background-color 0.2s ease-in-out;
 
   &:hover {
-    background: #ff9000cc;
+    background: #ffa246cc;
   }
 `;
