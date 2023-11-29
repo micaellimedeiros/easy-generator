@@ -10,14 +10,7 @@ EasyGenerator is a modern full-stack web application that provides seamless user
 
 <hr />
 
-## Table of Contents
-- [Features](#features)
-- [Technologies Used](#technologies-used)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-
-## Features
+## 🧰 Features
 - **User Authentication:**
   - Sign up and sign in functionality.
   - Password requirements: Minimum length of 8 characters, at least 1 letter, 1 number, and 1 special character.
@@ -33,7 +26,7 @@ EasyGenerator is a modern full-stack web application that provides seamless user
   - JWT-based authentication.
     
 
-## Technologies Used
+## 👩‍💻 Technologies Used
 - Frontend:
   - React
   - TypeScript
@@ -52,26 +45,70 @@ EasyGenerator is a modern full-stack web application that provides seamless user
 - Other:
   - Axios
 
-## Getting Started
+## ⚒️ Getting Started
 
 ### Prerequisites
 - Node.js and npm installed
 
 ### Installation
-1. Clone the repository:
+    git clone https://github.com/micaellimedeiros/easy-generator.git
+    cd easy-generator
 
-        git clone https://github.com/micaellimedeiros/easy-generator.git
-        cd easy-generator
-
-# Run docker compose
+### Run docker compose
     docker-compose up -d
 
-# Install backend dependencies
+### Install backend dependencies
     cd api
+    Copy the .env.example file to .env and update the environment variables with your database information
     yarn install
     yarn start:dev
 
-# Install frontend dependencies
+### Install frontend dependencies
     cd ../web
     yarn install
     yarn dev
+
+## Authentication Endpoints
+
+1. Sign Up
+
+    - Endpoint:
+        POST /api/auth/register
+    - Description:
+        Allows users to create a new account.
+    - Request Body:
+        { "email": "user@example.com", "name": "John Doe", "password": "password123" }
+    - Response:
+        { "message": "You are now registered." }
+        Set JWT cookie for authentication.
+
+2. Log In
+
+    - Endpoint:
+        POST /api/auth/login
+    - Description:
+        Allows users to log in to the application.
+    - Request Body:
+        { "email": "user@example.com", "password": "password123" }
+    - Response:
+        { "message": "You are now authenticated." }
+        Set JWT cookie for authentication.
+
+3. Log Out
+
+    - Endpoint:
+        POST /api/auth/logout
+    - Description:
+        Logs out the authenticated user.
+    - Request Body:
+        Empty
+    - Response:
+        { "message": "Logout successful." }
+        Clear JWT cookie.
+
+
+<hr />
+
+<div align="center">
+Happy Coding!
+</div>
