@@ -5,39 +5,41 @@ export const Container = styled.div`
   flex-direction: column;
   width: 100%;
   margin-bottom: 1.25rem;
-
-  span {
-    margin: 0.62rem 0 0 0.62rem;
-    font-size: 0.75rem;
-    color: red;
-  }
 `;
 
 export const InputContainer = styled.div`
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  position: relative;
+  position: relative; */
+
+  background: #232129;
+  border-radius: 10px;
+  width: 100%;
+
+  border: 2px solid #232129;
+  color: #666360;
+
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
 
   input {
+    flex: 1;
     width: 100%;
-    padding: 0.94rem 1.25rem;
+    background: transparent;
+    color: #f4ede8;
 
-    background: #121214;
-    font-size: 1rem;
     border: 2px solid transparent;
-    border-radius: 5px;
-    color: #e1e1e6;
+    padding: 0.94rem 1.25rem;
 
     outline: 0;
     transition: border 0.3s;
 
-    ::placeholder {
-      color: #737380;
-    }
+    font-size: 1rem;
+    border-radius: 5px;
 
-    &:disabled {
-      cursor: not-allowed;
-      color: #696969;
+    &::placeholder {
+      color: #666360;
     }
   }
 

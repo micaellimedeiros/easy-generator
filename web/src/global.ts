@@ -14,4 +14,11 @@ export default createGlobalStyle`
   svg {
     cursor: pointer;
   }
+
+  label {
+    font-size: 0.88rem;
+    color: #A8A8B3;
+
+    margin-bottom: 0.5rem;
+  }
 `;
