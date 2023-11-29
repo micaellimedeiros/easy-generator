@@ -5,6 +5,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "react-toastify";
 
 import api from "../services/api";
+import Input from "./Input";
 
 type FormData = {
   email: string;
@@ -44,32 +45,56 @@ const RegisterForm = () => {
       <h2>Register</h2>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label>Email:</label>
-        <input {...register("email", { required: "Email is required" })} />
-        {errors.email && <p>{errors.email.message}</p>}
-
-        <label>Name:</label>
-        <input {...register("name", { required: "Name is required" })} />
-        {errors.name && <p>{errors.name.message}</p>}
-
-        <label>Password:</label>
-        <input
-          type="password"
-          {...register("password", {
-            required: "Password is required",
-            minLength: {
-              value: 8,
-              message: "Password must be at least 8 characters long",
-            },
-            pattern: {
-              value:
-                /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-              message: "Password must meet the requirements",
-            },
-          })}
+        <Input
+          type="text"
+          id="name"
+          label="Name"
+          placeholder="John Doe"
+          required
+          register={{
+            ...register("name", {
+              required: "Name is required",
+            }),
+          }}
+          error={errors.name?.message?.toString()}
         />
 
-        {errors.password && <p>{errors.password.message}</p>}
+        <Input
+          type="email"
+          id="email"
+          label="Email"
+          placeholder="johndoe@email.com"
+          required
+          register={{
+            ...register("email", {
+              required: "Email is required",
+            }),
+          }}
+          error={errors.email?.message?.toString()}
+        />
+
+        <Input
+          type="password"
+          id="password"
+          label="Password"
+          placeholder="Safe password"
+          required
+          register={{
+            ...register("password", {
+              required: "Password is required",
+              minLength: {
+                value: 8,
+                message: "Password must be at least 8 characters long",
+              },
+              pattern: {
+                value:
+                  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+                message: "Password must meet the requirements",
+              },
+            }),
+          }}
+          error={errors.password?.message?.toString()}
+        />
 
         <button type="submit" disabled={loading}>
           Register
