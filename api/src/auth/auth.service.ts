@@ -26,11 +26,19 @@ export class AuthService {
   async register(body: RegisterDto): Promise<{ token: string }> {
     const { name, email, password } = body;
 
-    if (await this.emailExists(email)) {
+    console.log('body', body);
+
+    const alreadyExists = await this.emailExists(email);
+
+    console.log('alreadyExists', alreadyExists);
+
+    if (alreadyExists) {
       throw new ConflictException('User with this email already exists.');
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    console.log('hashedPassword', hashedPassword);
 
     const newUser = new this.userModel({
       name,
@@ -41,6 +49,8 @@ export class AuthService {
     await newUser.save();
 
     const token = this.jwtService.sign({ id: newUser._id });
+
+    console.log('token', token);
 
     return { token };
   }

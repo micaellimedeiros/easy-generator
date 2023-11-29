@@ -12,7 +12,6 @@ const PASSWORD_RULES =
 export class RegisterDto {
   @IsNotEmpty({ message: 'Name is not completed.' })
   @IsString()
-  @Matches(/^[A-Za-z]+$/, { message: 'Name must contain only letters.' })
   readonly name: string;
 
   @IsNotEmpty()

@@ -20,7 +20,10 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('/register')
-  async register(@Body() body: RegisterDto, @Res() response: Response) {
+  async register(
+    @Body() body: RegisterDto,
+    @Res({ passthrough: true }) response: Response,
+  ) {
     try {
       const jwt = await this.authService.register(body);
 
@@ -28,6 +31,7 @@ export class AuthController {
 
       return { message: 'Registration successful.', HttpStatus: 200 };
     } catch (error) {
+      console.log('error', error);
       throw new HttpException(
         error.message || 'Registration failed.',
         HttpStatus.METHOD_NOT_ALLOWED,
@@ -36,7 +40,10 @@ export class AuthController {
   }
 
   @Post('/login')
-  async login(@Body() body: LoginDto, @Res() response: Response) {
+  async login(
+    @Body() body: LoginDto,
+    @Res({ passthrough: true }) response: Response,
+  ) {
     try {
       const jwt = await this.authService.login(body);
 
@@ -52,7 +59,10 @@ export class AuthController {
   }
 
   @Post('/logout')
-  async logout(@Res() response: Response, @Req() request: Request) {
+  async logout(
+    @Req() request: Request,
+    @Res({ passthrough: true }) response: Response,
+  ) {
     try {
       const cookie = request.cookies['jwt'];
 
