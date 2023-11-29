@@ -108,7 +108,7 @@ const RegisterForm = () => {
               error={errors.password?.message?.toString()}
             />
 
-            <Button type="submit" disabled={loading}>
+            <Button type="submit" disabled={loading} loading={loading}>
               Register
             </Button>
           </form>
