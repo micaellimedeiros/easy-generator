@@ -16,4 +16,9 @@ export const Container = styled.button`
   &:hover {
     background: #ffa246cc;
   }
+
+  &:disabled {
+    background: #ffa24666;
+    cursor: not-allowed;
+  }
 `;
