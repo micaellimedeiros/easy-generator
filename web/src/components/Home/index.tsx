@@ -5,8 +5,11 @@ import { Container, AnimationContainer } from "./styles";
 import Button from "../Button";
 
 import logo from "../../assets/logo.svg";
+import { useAuth } from "../../context/auth";
 
 const Home = () => {
+  const { isLoggedIn, logout } = useAuth();
+
   return (
     <Container>
       <AnimationContainer>
@@ -15,13 +18,19 @@ const Home = () => {
         <h2>Welcome to the Application! 👋</h2>
 
         <div>
-          <Link to="/login">
-            <Button>Login</Button>
-          </Link>
+          {isLoggedIn ? (
+            <Button onClick={async () => logout()}>Logout</Button>
+          ) : (
+            <>
+              <Link to="/login">
+                <Button>Login</Button>
+              </Link>
 
-          <Link to="/register">
-            <Button>Register</Button>
-          </Link>
+              <Link to="/register">
+                <Button>Register</Button>
+              </Link>
+            </>
+          )}
         </div>
       </AnimationContainer>
     </Container>

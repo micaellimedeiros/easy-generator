@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FiArrowLeft } from "react-icons/fi";
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "react-toastify";
+
+import { useAuth } from "../../context/auth";
 
 import api from "../../services/api";
 import logo from "../../assets/logo.svg";
@@ -20,7 +22,7 @@ type FormData = {
 };
 
 const RegisterForm = () => {
-  const navigate = useNavigate();
+  const { login } = useAuth();
 
   const [loading, setLoading] = useState(false);
 
@@ -34,11 +36,11 @@ const RegisterForm = () => {
     try {
       setLoading(true);
 
-      await api.post("auth/register", data);
+      const response = await api.post("auth/register", data);
 
       toast.success(`User registered successfully`);
 
-      navigate("/");
+      login(response.data.token);
     } catch (error: any) {
       toast.error(`Error: ${error.response.data.message}`);
     } finally {

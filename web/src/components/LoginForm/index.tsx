@@ -1,17 +1,19 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { FiArrowLeft } from "react-icons/fi";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { toast } from "react-toastify";
 
+import { useAuth } from "../../context/auth";
+
 import api from "../../services/api";
 import logo from "../../assets/logo.svg";
 
-import { Container, Content, AnimationContainer, Background } from "./styles";
-
 import Button from "../Button";
 import Input from "../Input";
+
+import { Container, Content, AnimationContainer, Background } from "./styles";
 
 type FormData = {
   email: string;
@@ -19,9 +21,9 @@ type FormData = {
 };
 
 const LoginForm = () => {
-  const navigate = useNavigate();
-
   const [loading, setLoading] = useState(false);
+
+  const { login } = useAuth();
 
   const {
     register,
@@ -33,11 +35,11 @@ const LoginForm = () => {
     try {
       setLoading(true);
 
-      await api.post("auth/login", data);
+      const response = await api.post("auth/login", data);
 
       toast.success(`User logged in successfully`);
 
-      navigate("/");
+      login(response.data.token);
     } catch (error: any) {
       toast.error(`Error: ${error.response.data.message}`);
     } finally {
