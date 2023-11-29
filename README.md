@@ -59,10 +59,10 @@
     cd easy-generator
 
 ### Run docker compose
+    cd api
     docker-compose up -d
 
 ### Install backend dependencies
-    cd api
     Copy the .env.example file to .env and update the environment variables with your database information
     yarn install
     yarn start:dev
