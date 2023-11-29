@@ -9,8 +9,9 @@
 <br />
 
 <div align="center">
-    <img src="https://github.com/micaellimedeiros/easy-generator/assets/54600663/6783706f-1803-4800-b249-f9460f44e442" width="70%" />
+    <img src=https://github.com/micaellimedeiros/easy-generator/assets/54600663/b895e8fc-2f00-4d30-90ed-90ddc9bb975e width="70%" />
 </div>
+
 
 <hr />
 
