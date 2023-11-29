@@ -29,9 +29,12 @@ export class AuthController {
 
       response.cookie('jwt', jwt, { httpOnly: true });
 
-      return { message: 'Registration successful.', HttpStatus: 200 };
+      return {
+        message: 'Registration successful.',
+        HttpStatus: 200,
+        token: jwt.token,
+      };
     } catch (error) {
-      console.log('error', error);
       throw new HttpException(
         error.message || 'Registration failed.',
         HttpStatus.METHOD_NOT_ALLOWED,
@@ -49,7 +52,11 @@ export class AuthController {
 
       response.cookie('jwt', jwt, { httpOnly: true });
 
-      return { message: 'Authentication successful.', HttpStatus: 200 };
+      return {
+        message: 'Authentication successful.',
+        HttpStatus: 200,
+        token: jwt.token,
+      };
     } catch (error) {
       throw new HttpException(
         error.message || 'Authentication failed.',
@@ -64,16 +71,16 @@ export class AuthController {
     @Res({ passthrough: true }) response: Response,
   ) {
     try {
-      const cookie = request.cookies['jwt'];
+      const token = request.headers.authorization;
 
-      if (!cookie) {
+      if (!token) {
         throw new HttpException(
           'Authentication failed.',
           HttpStatus.UNAUTHORIZED,
         );
       }
 
-      const data = await this.authService.verifyJwtToken(cookie.token);
+      const data = await this.authService.verifyJwtToken(token);
 
       if (!data) {
         throw new UnauthorizedException('The JWT cannot be verified!');
